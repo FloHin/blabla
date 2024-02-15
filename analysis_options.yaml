@@ -1,0 +1,38 @@
+# This file configures the analyzer to use the lint rule set from `package:lint`
+
+include: package:lints/recommended.yaml # For production apps
+# include: package:lint/casual.yaml # For code samples, hackathons and other non-production code
+# include: package:lint/package.yaml # Use this for packages with public API
+
+
+# You might want to exclude auto-generated files from dart analysis
+analyzer:
+  exclude: [ build/** ]
+  language:
+    strict-casts: true
+    strict-raw-types: true
+
+# You can customize the lint rules set to your own liking. A list of all rules
+# can be found at https://dart-lang.github.io/linter/lints/options/options.html
+linter:
+  rules:
+    always_use_package_imports: true
+    avoid_empty_else: true
+    avoid_print: false
+    avoid_slow_async_io: true
+    avoid_types_as_parameter_names: true
+    avoid_web_libraries_in_flutter: true
+    avoid_catching_errors: true
+    avoid_escaping_inner_quotes: true
+    avoid_field_initializers_in_const_classes: true
+    avoid_final_parameters: true
+    avoid_init_to_null: true
+    avoid_multiple_declarations_per_line: true
+    non_constant_identifier_names: false
+    cancel_subscriptions: true
+    close_sinks: true
+    collection_methods_unrelated_type: true
+    empty_statements: true
+    # enums and similar are CAPITAL_CASE
+    constant_identifier_names: false
+
