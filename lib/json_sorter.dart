@@ -1,6 +1,12 @@
 import 'dart:convert';
 
-class JsonSorter {
+import 'package:logger/src/logger.dart';
+
+class JsonHandler {
+  final Logger logger;
+
+  JsonHandler(this.logger);
+
   Future<String?> sort(String content) async {
     try {
       final result = json.decode(content);
@@ -24,8 +30,7 @@ class JsonSorter {
 
       Map<String, dynamic> sortedJsonMap = Map.fromEntries(
           fixedMap.entries.toList()..sort((a, b) => a.key.compareTo(b.key)));
-      const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-      String sortedJsonString = '${encoder.convert(sortedJsonMap)}\n';
+      String sortedJsonString = encodeMap(sortedJsonMap);
 
       for (final key in strudelMap.keys) {
         final value =
@@ -38,7 +43,38 @@ class JsonSorter {
 
       return sortedJsonString;
     } catch (e) {
-      print("Error loading or parsing JSON file: $e");
+      logger.e("Error loading or parsing JSON file: $e", error: e);
+      return null;
+    }
+  }
+
+  String encodeMap(Map<String, dynamic> sortedJsonMap) {
+    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    String sortedJsonString = '${encoder.convert(sortedJsonMap)}\n';
+    return sortedJsonString;
+  }
+
+  Future<Map<String, String>?> getMap(String content) async {
+    try {
+      final result = json.decode(content);
+      if (result == null) {
+        return null;
+      }
+      Map<String, dynamic> jsonMap = result as Map<String, dynamic>;
+      Map<String, String> fixedMap = {};
+      for (final key in result.keys) {
+        final value = jsonMap[key];
+        if (key.startsWith('@')) {
+          // just skip
+        } else {
+          if (value is String) {
+            fixedMap[key] = value;
+          }
+        }
+      }
+      return fixedMap;
+    } catch (e) {
+      logger.w("Error loading or parsing JSON file: $e", error: e);
       return null;
     }
   }

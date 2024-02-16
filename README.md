@@ -12,7 +12,7 @@ Sorts a arb language json file.
 
 ## Build
 
-For Windows:
+Linux:
 
 ```bash
 dart compile exe .\lib\main.dart  -o .\bin\blabla

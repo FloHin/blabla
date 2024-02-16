@@ -67,13 +67,13 @@ final complex_sorted = '''
 
 void main() {
   test('JsonFileLoader should parse easy json', () async {
-    final subject = JsonSorter();
+    final subject = JsonHandler();
     final result = await subject.sort(easy_unsorted);
     expect(result, easy_sorted);
   });
 
   test('JsonFileLoader should parse complex json', () async {
-    final subject = JsonSorter();
+    final subject = JsonHandler();
     final result = await subject.sort(complex_unsorted);
     expect(result, complex_sorted);
   });
